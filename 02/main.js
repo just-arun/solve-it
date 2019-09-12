@@ -19,36 +19,27 @@ for (let i = 0; i < breakpoint; i++) {
 pos = pos.splice(1,pos.length);
 hei = hei.splice(1,hei.length);
 
-function main(position, height) {
-    let mudHieghts = [];
-    for (let i = 0; i < position.length; i++) {
-        let mudHieght = 0;
-        const left = position[i];
-        const right = position[i+1];
-        let leftHeight = height[i];
-        let rightHeight = height[i+1];
-        if (right !== undefined) {
-            if (right-left != 0) {
-                let diference = right-left-1;
-                console.log(diference);
-                
-                let compareLeftRightHeight =  (rightHeight - leftHeight);
-                if (diference == 1) {
-                    (compareLeftRightHeight > 0)?mudHieght=leftHeight+1:
-                    mudHieght=rightHeight+1;
-                } else if((diference%2) == 0) {
-                    (compareLeftRightHeight > 0)?mudHieght=(leftHeight+1)/2:
-                    mudHieght=(rightHeight+1)/2;
-                } else {
-                    
-                }
+const maxheight = (position, height) => {
+    let positionLangth = position.length;
+    let maximum = 0;
+
+    for (let i = 0; i < (positionLangth-1); i++) {
+        if (position[i] < (position[i+1]-1)) {
+            let heightDiff = Math.abs(height[i+1] - height[i]);
+            let gapLength = position[i+1] - position[i] - 1;
+            let localMax = 0;
+            if (gapLength > heightDiff) {
+                let low = Math.max(height[i+1],height[i]) + 1;
+                let GapRemaining = gapLength-heightDiff-1;
+                localMax=low+GapRemaining/2;
+            } else {
+                localMax = Math.min(height[i+1], height[i] + gapLength)
             }
+            maximum = Math.max(maximum, localMax);    
         }
-        mudHieghts.push(mudHieght);
     }
-    console.log(mudHieghts.sort());
+    return maximum;
 }
-main(pos,hei);
 
 console.log(finalArr);
 console.log(pos);
