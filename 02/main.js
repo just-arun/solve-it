@@ -1,23 +1,5 @@
 const fs = require('fs');
-const file = fs.readFileSync('./input000.txt');
-const initArr = file.toString().replace(/\n/g,' ').split(' ');
-const finalArr = [];
-initArr.forEach((a) => {
-    if (a) {
-        finalArr.push(a);
-    }
-});
 
-const breakpoint = finalArr.length/2;
-let pos = [];
-let hei = [];
-
-for (let i = 0; i < breakpoint; i++) {
-    pos.push(Number(finalArr[i]));
-    hei.push(Number(finalArr[(breakpoint+i)]));
-}
-pos = pos.splice(1,pos.length);
-hei = hei.splice(1,hei.length);
 
 const maxheight = (position, height) => {
     let positionLangth = position.length;
@@ -38,17 +20,74 @@ const maxheight = (position, height) => {
             maximum = Math.max(maximum, localMax);    
         }
     }
-    return maximum;
+    return Math.floor(maximum);
 }
 
-console.log(finalArr);
-console.log(pos);
-console.log(hei);
+const main = () => {
+    let result = [];
+    for (let k = 0; k <= 14; k++) {
+        if (k<10) {
+            const file = fs.readFileSync(`./input00${k}.txt`);
+            const initArr = file.toString().replace(/\n/g,' ').split(' ');
+            const outputFile = fs.readFileSync(`./output00${k}.txt`);
+            const outArr = outputFile.toString().replace(/\n/g,' ').split(' ');
+            const finalArr = [];
+            initArr.forEach((a) => {
+                if (a) {
+                    finalArr.push(a);
+                }
+            });
+            
+            const breakpoint = finalArr.length/2;
+            let pos = [];
+            let hei = [];
+            
+            for (let i = 0; i < breakpoint; i++) {
+                pos.push(Number(finalArr[i]));
+                hei.push(Number(finalArr[(breakpoint+i)]));
+            }
+            pos = pos.splice(1,pos.length);
+            hei = hei.splice(1,hei.length);
+            // console.log(Number(outArr[0]));
+            
+            // console.log(maxheight(pos,hei));
+            let outp = {
+                myOut: maxheight(pos,hei),
+                expOut: Number(outArr[0]),
+            }
+            result.push(outp);
+        } else{
+            const file = fs.readFileSync(`./input0${k}.txt`);
+            const initArr = file.toString().replace(/\n/g,' ').split(' ');
+            const outputFile = fs.readFileSync(`./output0${k}.txt`);
+            const outArr = outputFile.toString().replace(/\n/g,' ').split(' ');
+            const finalArr = [];
+            initArr.forEach((a) => {
+                if (a) {
+                    finalArr.push(a);
+                }
+            });
+            
+            const breakpoint = finalArr.length/2;
+            let pos = [];
+            let hei = [];
+            
+            for (let i = 0; i < breakpoint; i++) {
+                pos.push(Number(finalArr[i]));
+                hei.push(Number(finalArr[(breakpoint+i)]));
+            }
+            pos = pos.splice(1,pos.length);
+            hei = hei.splice(1,hei.length);
+            
+            // console.log(maxheight(pos,hei));
+            let outp = {
+                myOut: maxheight(pos,hei),
+                expOut: Number(outArr[0]),
+            }
+            result.push(outp);
+        }
+    }
+    console.log(result);
+}
 
-
-
-
-
-
-
-
+main()
